@@ -1,0 +1,245 @@
+\documentclass[10pt,twocolumn]{article}
+
+% use the oxycomps style file
+\usepackage{oxycomps}
+
+% usage: \fixme[comments describing issue]{text to be fixed}
+% define \fixme as not doing anything special
+\newcommand{\fixme}[2][]{#2}
+% overwrite it so it shows up as red
+\renewcommand{\fixme}[2][]{\textcolor{red}{#2}}
+% overwrite it again so related text shows as footnotes
+%\renewcommand{\fixme}[2][]{\textcolor{red}{#2\footnote{#1}}}
+
+% read references.bib for the bibtex data
+\bibliography{references}
+
+% include metadata in the generated pdf file
+\pdfinfo{
+    /Title (GitHub Tutorial)
+    /Author (James Derrod)
+}
+
+% set the title and author information
+\title{GitHub Tutorial}
+\author{James Derrod}
+\affiliation{Occidental College}
+\email{jderrod@oxy.edu}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+This document serves as a tutorial for using the GitHub version control system through the command line and the GitHub Desktop app.
+
+
+This tutorial will cover the following concepts:
+\begin{itemize}
+    \item Repositories:
+    \begin{itemize}
+        \item Initializing repositories.
+        \item Cloning repositories.
+        \item Adding to a repositories.
+        \item Committing to repositories.
+        \item Pushing to repositories.
+        \item Pulling from repositories.
+        \item Stashes.
+    \end{itemize}
+    \item Merging:
+    \begin{itemize}
+        \item Working with Branches
+        \item Merge conflicts \& resolving them.
+    \end{itemize}    
+\end{itemize}
+
+By the end of this tutorial you should have a concrete understanding of the fundamentals of managing projects with GitHub.
+
+\section{Repositories}
+Repositories are essentially containers for a project's files. These files may contain code, documentation, other resources and a revision history of each file. GitHub's version control system utilizes both local and remote repositories, and facilitates the process of moving files between them, allowing for ease of collaboration.
+
+\subsection{Initializing a Repository}
+
+Initializing a repository means creating a new Git repository from an existing directory or project that wasn't under version control before.
+
+\begin{itemize}
+    \item Command Line: 
+    \begin{itemize}
+        \item  Navigate to your project directory and execute 'git init' to initialize a new Git repository.
+        \item This creates a '.git' directory in your project, containing all necessary metadata for version control.
+    \end{itemize}
+    \item GitHub Desktop
+    \begin{enumerate}
+        \item GitHub Desktop does not directly support initializing a repository within the app. You'll need to initialize the repository using the command line or another Git interface, then add it to GitHub Desktop by going to 'File' - 'Add Local Repository'.
+    \end{enumerate}
+    
+\end{itemize}
+
+Initializing a repository is the foundational step to start tracking your project with Git, turning a directory into a workspace that records changes and history. \hyperlink{https://git-scm.com/docs/git-init}{See Git documentation here}. \cite{GitInitDocumentation}\cite{GitGuidesInit}
+
+\subsection{Cloning a Repository}
+
+Cloning is the process of creating a local copy of a remote repository. It includes all branches and commits, enabling offline work and exploration of the repository's history.
+
+\begin{itemize}
+    \item Command Line: 
+    \begin{itemize}
+        \item Use 'git clone [url]' to clone a repository. 
+        \item You can specify a directory name to clone into with 'git clone [url] [directoryName]'.
+    \end{itemize}
+    \item GitHub Desktop
+    \begin{enumerate}
+        \item Open GitHub Desktop and log in to your GitHub account.
+        \item Go to 'File' - 'Clone Repository'
+        \item Choose the repository you wish to clone from the list or specify the URL.
+        \item Choose the local path where you want to clone the repository.
+        \item Click 'Clone'
+    \end{enumerate}
+    
+\end{itemize}
+
+Cloning is the first step to contribute to a project, allowing you to work with the repository's files locally. \hyperlink{https://git-scm.com/docs/git-clone}{See Git documentation here}. \cite{GitCloneDocumentation}\cite{GitGuidesClone}
+
+\subsection{Adding to a Repository}
+Adding changes, also known as staging, prepares your changes for a commit by marking modifications to be included in the next commit snapshot. This step is crucial for granular control over what is committed.
+
+\begin{itemize}
+    \item Command Line: 
+    \begin{itemize}
+        \item  Use 'git add [file]' to stage a specific file 
+        \item Or use 'git add .' to stage all changes in the directory. This command does not alter the repository until a commit is made.
+    \end{itemize}
+    \item GitHub Desktop
+    \begin{enumerate}
+        \item Changes are automatically detected and listed.
+        \item To stage changes, select the checkbox next to each file you wish to include in your next commit.
+    \end{enumerate}
+    
+\end{itemize}
+
+
+Adding changes allows you to curate what goes into a commit, ensuring only desired modifications are included, enabling a neat commit history and facilitating precise project tracking. \hyperlink{https://git-scm.com/docs/git-add}{See Git documentation here}. \cite{GitAddDocumentation}\cite{GitGuidesAdd}
+
+\subsection{Committing to a Repository}
+Committing is the process of saving staged changes to the local repository. Each commit has a message that describes the changes, creating a transparent history of your work.
+
+
+\begin{itemize}
+    \item Command Line: 
+    \begin{itemize}
+        \item  Execute 'git commit -m "Commit message"' to commit staged changes with a descriptive message.
+        \item For multi-line messages, use 'git commit' without '-m' and an editor will open. 
+        \item This editor is determined by your Git configuration, often defaulting to Vim or your system's default text editor. Here, you can write a multi-line commit message, providing the opportunity to include a detailed description of the changes made, why they were made, and any other relevant information.
+    \end{itemize}
+    \item GitHub Desktop
+    \begin{enumerate}
+        \item After staging changes, enter a commit message in the summary field.
+        \item Click "Commit to [branch]" to save your changes locally
+    \end{enumerate}
+    
+\end{itemize}
+
+Committing encapsulates your progress, allowing you to document each step of development clearly and methodically. \hyperlink{https://git-scm.com/docs/git-commit}{See Git documentation here}. \cite{GitCommitDocumentation}\cite{GitGuidesCommit}
+
+\subsection{Pushing to a Repository}
+Pushing is the act of sending your committed changes to a remote repository. This updates the remote repository with your local commits, sharing your work with the team.
+
+\begin{itemize}
+    \item Command Line: 
+    \begin{itemize}
+        \item  Execute 'git push' to upload local branch commits to the remote repository. 
+        \item If you're pushing a new branch, use 'git push -u origin [branchName]' to set the upstream branch.
+    \end{itemize}
+    \item GitHub Desktop
+    \begin{enumerate}
+        \item Commit your changes locally.
+        \item Click "Push origin" to send your commits to the remote repository.
+    \end{enumerate}
+    
+\end{itemize}
+
+Pushing is essential for collaborative development, allowing others to see and work with your contributions. \hyperlink{https://git-scm.com/docs/git-push}{See Git documentation here}. \cite{GitPushDocumentation}\cite{GitGuidesPush}
+
+\subsection{Pulling from a Repository}
+
+Pulling updates your local branch with changes from its remote counterpart, merging any new commits from the remote repository into your local working directory.
+
+\begin{itemize}
+    \item Command Line: 
+    \begin{itemize}
+        \item  Use 'git pull' to fetch changes from the remote and merge them into your current branch. This command combines 'git fetch' followed by 'git merge' 
+    \end{itemize}
+    \item GitHub Desktop
+    \begin{enumerate}
+        \item Navigate to 'Repository' in the menu bar.
+        \item Click 'Pull' to fetch and merge remote changes into your local branch.
+    \end{enumerate}
+    
+\end{itemize}
+
+Pulling ensures your repository stays up-to-date with others' work, facilitating collaboration and minimizing merge conflicts. \hyperlink{https://git-scm.com/docs/git-pull}{See Git documentation here}. \cite{GitPullDocumentation}\cite{GitGuidesPull}
+
+\subsection{Stashes}
+
+Stashing temporarily shelves (or stashes) changes so you can work on a different task. Your changes are saved on a stack, and you can reapply them later.
+
+\begin{itemize}
+    \item Command Line: 
+    \begin{itemize}
+        \item To stash changes: 'git stash' saves your working directory and index state.
+        \item To apply stashed changes: 'git stash pop' re-applies the most recently stashed changes and removes them from the stash stack.
+    \end{itemize}
+    \item GitHub Desktop
+    \begin{itemize}
+        \item GitHub Desktop does not directly support stashing through the GUI. Stash management needs to be done via the command line or other Git tools.
+    \end{itemize}
+    
+\end{itemize}
+
+Stashes are useful for switching contexts quickly without committing incomplete work. \hyperlink{https://git-scm.com/docs/git-stash}{See Git documentation here}. \cite{GitPullDocumentation}
+
+\subsection{Working with Branches}
+
+Branches in Git enable you to diverge from the main line of development and work independently without affecting the main line.
+
+\begin{itemize}
+    \item Command Line: 
+    \begin{itemize}
+        \item To create a new branch: 'git branch [branchName]'
+        \item To switch to a branch: 'git checkout [branchName]'
+        \item 'git merge [branchName]' - executed from the branch you want to merge into.
+    \end{itemize}
+    \item GitHub Desktop
+    \begin{enumerate}
+        \item Click the current branch name in the top menu to open the branch menu.
+        \item Click "New Branch" to create and switch to a new branch.
+        \item To merge, first switch to the branch you want to merge into. Then go to Branch in the menu, and select 'Merge into current branch'.
+    \end{enumerate}
+\end{itemize}
+Branches are essential for managing features, fixes, and experiments in a segregated manner without disrupting the main codebase. \hyperlink{https://git-scm.com/docs/git-branch}{See Git documentation here}. \cite{GitBranchDocumentation}\cite{GitGuidesRemote}
+
+
+\section{Merge Conflicts and Resolving Them}
+
+Merge conflicts occur when Git can't automatically reconcile differences in code between two commits. They often happen when two branches have made edits to the same line in a file, or when one branch deletes a file while the other branch was modifying it.
+\begin{itemize}
+    \item Command Line: 
+    \begin{enumerate}
+        \item Use 'git status' to identify conflicted files.
+        \item Open conflicted files and look for conflicts indicated by ASCII markers in the text editor.
+        \item Manually edit the file to resolve conflicts.
+        \item After resolving conflicts, use 'git add [file]' to mark as resolved and commit the changes.
+    \end{enumerate}
+    \item GitHub Desktop
+    \begin{itemize}
+        \item GitHub Desktop notifies you of conflicts during a merge but does not provide tools to resolve them within the app. You'll need to resolve conflicts in a text editor or IDE, then mark them as resolved through the app.
+    \end{itemize}
+    
+\end{itemize}
+
+Resolving merge conflicts is crucial for maintaining a clean and efficient development process, ensuring that all changes are integrated correctly.
+
+\printbibliography
+
+\end{document}
